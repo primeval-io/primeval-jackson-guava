@@ -16,7 +16,6 @@
 	<description>Primeval JSON Jackson Guava 21 Provider</description>
 
 	<properties>
-		<jackson.version>2.8.7</jackson.version>
 		<guava.version>21.0</guava.version>
 	</properties>
 
