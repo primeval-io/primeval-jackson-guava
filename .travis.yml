@@ -1,0 +1,16 @@
+language: java
+jdk:
+- oraclejdk8
+sudo: false
+script: mvn clean verify
+after_success:
+- VERSION=`python -c "import xml.etree.ElementTree as ET;  print(ET.parse(open('pom.xml')).getroot().find('{http://maven.apache.org/POM/4.0.0}version').text)"`
+- echo "Found version $VERSION"
+- if [[ $VERSION == *-SNAPSHOT ]]; then echo "Deploying to OSSRH Snapshots..."; mvn
+  clean deploy -DaltDeploymentRepository=ossrh::default::https://oss.sonatype.org/content/repositories/snapshots
+  -DskipTests -B --settings .travis-deploy-settings.xml; else echo "Release version,
+  deploy is manual."; fi
+env:
+  global:
+  - secure: jn04lF5+yGmSjCYsUzAbFyOyHP1GwDnHQVbCQ6SIDz5I6dHDfH1MOeQaSJTXz7B+HwJS1cvVNQnSbGfuXScfSZekOmv3iMC82lGA7g20/CN1VSM5VLlCKZ85YYmLVLwLwCMV5TP/fAc9XWrOxuKiMFdSweiKEkCXiI7i011C0DV4dCP4/HoH+TAv/k5S6IME9vgqmv9mTc3/vEpP38dauIKUZrxjVVvlYj86txOODZbVMfCQmZHXvg78ATD0Nu8qv7c2FYZeexjFnfKpu7oGxmWi4CSNiBq8hBHZ+TGdrk/D1PocC54g9YsKiVuLzJIAHLPMntly8uFykr+29U+jtY99p23uGDdWAP1dYh25H8Mu+D/fC9cBwVdJ+dy82yKo2H+lX2baQnmVMEUYQG/bS00MlonClZRS2V5E4D2SxWOUsXOuUpO8o9sS1ypkFtR93R74VyMqsac31XNr1JFe3MAknKwhQRkgvb6nKGKPneHJX4XMtIt3Nnl6cWBNj/hz2eG+dqBM4p8dUXfaycJJRTKMG/2+jdgAfYTXnNhvVBqSCYX2WWeoSV8rXrnhfltWd0z7WDFoP4rf0hhtrKH/jpEkPxLHiMQeCVhYPJ5H+SSTGzv/9ldloOa7tOKIW2RlSphrCePTLNHBL++XvYgxfLC612pnsm9I6mpBttoUu9g=
+  - secure: WXw72ATWcqY21G/cX3h7lOEoIGFF4FZ8PZHXJZufbp7bdSbs1Lo80TpFWs47p5NmBztHLJ3kR1FUQ8pEM1LazTBTiaFjawSsGcHvFJ7pi6HYxBGrdJZq6ZaxOcU6R1lHJLh0m0nQLOEwu+cHQ9U1me53RUroqDfYQGAVV8al5t7SyarVopv5aUve1fytd84dONPDsYpmuxqZ5nP39QP5k14HcEHlyWK2O5ZAodpC2/s/ZBOiRIWrsayXQxU6dEpdP3MhjPY25hhr2Ln6OpvcsCbxyzaRZDFZwKzLP1Nn6gjImbibMMf2t5tsAOxu43hKLgfruwtdjnGJ5VfulClbODHtWk82gtUZDxLFDWQBJLBgQxKCeNgl+onKLmn5n9L0NlkHyJuPuwPRhh+UsLykW2M3QdjuPmySmKS+aFUNmdeKd2NAwYxNXjVARl6Ucpo8Fk9vPGFPmmvDm7QhTPIzGdDDPAP/pK4t5xiHrXuPu0OTGXLgs9RApglgajhOTBcbgjQE8FR0J5b6Ccv+ge2rwj1RbqtuvpnPluyR6NOkgnFBjlK0y8zKxQT4rVwgsCxUnUtJI8425KsQbO33HEwNh7M8ZTxgdpjv/l7gxqqsrNxtBdOu7Qv2zO8ixgPScgCMpiSZxyJ8VXgboe3z0u4u+Ski4u7YHcUIt1xxJtRu8VQ=
