@@ -65,6 +65,17 @@
 					<scope>provided</scope>
 				</dependency>
 			</dependencies>
+		</profile>
+		<profile>
+			<id>jackson-guava-release</id>
+			<activation>
+				<file>
+					<exists>src/main/java</exists>
+				</file>
+				<property>
+					<name>release</name>
+				</property>
+			</activation>
 			<build>
 				<plugins>
 
