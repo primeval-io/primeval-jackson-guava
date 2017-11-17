@@ -1,0 +1,3 @@
+Bundle-SymbolicName: io.primeval.jackson.guava23
+Private-Package: com.fasterxml.jackson.datatype.guava,com.fasterxml.jackson.datatype.guava.*
+Import-Package: com.google.common.*;version='[23,24)',*
