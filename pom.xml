@@ -20,6 +20,7 @@
 		<module>guava18</module>
 		<module>guava21</module>
 		<module>guava23</module>
+		<module>guava24</module>
 	</modules>
 
 	<dependencyManagement>
